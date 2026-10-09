@@ -5,8 +5,9 @@ many versions are archived, what the files say, and the Zenodo switch.
 
 ## No status bar item
 
-The file you are editing belongs to no project with `CITATION.cff` or `.zenodo.json` (the log
-line names the project it found), or `citewatch.showStatusBar` is off.
+The file you are editing belongs to no project with `CITATION.cff` or `.zenodo.json`, or
+`citewatch.showStatusBar` is off. The log says which project was chosen, or why none was: a
+workspace holding many repositories has no project until a file inside one is opened.
 
 ## "Zenodo integration: unknown"
 

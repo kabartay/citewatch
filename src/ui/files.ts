@@ -86,17 +86,25 @@ async function projectRootFrom(dir: vscode.Uri): Promise<vscode.Uri | undefined>
   return repository;
 }
 
+/** Where the active project came from, for the log. */
+export type ProjectChoice =
+  | { readonly kind: 'file'; readonly root: vscode.Uri | undefined; readonly file: vscode.Uri }
+  | { readonly kind: 'other'; readonly root: vscode.Uri | undefined };
+
 /**
- * The project of the active editor's file, else of the first workspace folder that is one.
+ * The project of the active editor's file. When the active editor is not a file on disk (the
+ * Output panel, an untitled buffer) or there is none, `kind` is `other` and `root` is the first
+ * workspace folder that is a project, so the caller can keep showing the last project instead.
  */
-export async function activeProject(): Promise<vscode.Uri | undefined> {
+export async function activeProject(): Promise<ProjectChoice> {
   const uri = vscode.window.activeTextEditor?.document.uri;
   if (uri?.scheme === 'file') {
-    const root = await projectRootFrom(vscode.Uri.joinPath(uri, '..'));
-    if (root) {
-      return root;
-    }
+    return { kind: 'file', root: await projectRootFrom(vscode.Uri.joinPath(uri, '..')), file: uri };
   }
+  return { kind: 'other', root: await firstWorkspaceProject() };
+}
+
+async function firstWorkspaceProject(): Promise<vscode.Uri | undefined> {
   for (const folder of vscode.workspace.workspaceFolders ?? []) {
     const root = await projectRootFrom(folder.uri);
     if (root) {

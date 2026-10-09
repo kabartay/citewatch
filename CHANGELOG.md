@@ -6,6 +6,14 @@ All notable changes to Citewatch. The format follows
 
 ## [Unreleased]
 
+## [0.1.2] — 2026-10-09
+
+### Changed
+
+- The status bar keeps showing the last project while the Output panel or another non-file
+  editor has focus, instead of disappearing.
+- The log names the project Citewatch chose, or says why it found none, once per change.
+
 ## [0.1.1] — 2026-10-09
 
 ### Fixed
@@ -34,6 +42,7 @@ All notable changes to Citewatch. The format follows
 - Commands to copy the concept DOI, the latest version DOI and a shields.io DOI badge, and to
   set one version in every file.
 
-[Unreleased]: https://github.com/kabartay/citewatch/compare/v0.1.1...HEAD
+[Unreleased]: https://github.com/kabartay/citewatch/compare/v0.1.2...HEAD
+[0.1.2]: https://github.com/kabartay/citewatch/compare/v0.1.1...v0.1.2
 [0.1.1]: https://github.com/kabartay/citewatch/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/kabartay/citewatch/releases/tag/v0.1.0

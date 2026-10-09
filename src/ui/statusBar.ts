@@ -18,6 +18,10 @@ export class CitationStatusBar implements vscode.Disposable {
   private timer: ReturnType<typeof setInterval> | undefined;
   /** Counts refreshes, so one overtaken by a later refresh does not draw. */
   private generation = 0;
+  /** The project last shown, kept while the active editor is not a file (e.g. the log). */
+  root: vscode.Uri | undefined;
+  /** The last project line written to the log, so a line is written only on a change. */
+  private logged = '';
   current: CitationSummary | undefined;
 
   constructor(
@@ -41,10 +45,19 @@ export class CitationStatusBar implements vscode.Disposable {
   /** Re-reads the active project's citation state; `force` bypasses the cache. */
   async refresh(force = false): Promise<void> {
     const generation = ++this.generation;
-    const root = await activeProject();
+    const choice = await activeProject();
     if (generation !== this.generation) {
       return;
     }
+    const root = choice.kind === 'file' ? choice.root : (this.root ?? choice.root);
+    this.root = root;
+    this.note(
+      root
+        ? `project: ${root.fsPath}`
+        : choice.kind === 'file'
+          ? `no project for ${choice.file.fsPath}: no CITATION.cff, .zenodo.json or .git above it`
+          : 'no project: open a file inside a repository',
+    );
     if (!root || !readConfig().showStatusBar) {
       this.item.hide();
       return;
@@ -67,6 +80,13 @@ export class CitationStatusBar implements vscode.Disposable {
     this.item.tooltip = new vscode.MarkdownString(tooltipMarkdown(this.current));
     this.item.backgroundColor = needsAttention(this.current) ? new vscode.ThemeColor('statusBarItem.warningBackground') : undefined;
     this.item.show();
+  }
+
+  private note(line: string): void {
+    if (line !== this.logged) {
+      this.logged = line;
+      this.log.info(line);
+    }
   }
 
   dispose(): void {

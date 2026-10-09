@@ -62,7 +62,7 @@ async function actions(bar: CitationStatusBar): Promise<void> {
 
 /** Writes one version into every file that states one, keeping each file's formatting. */
 async function setVersion(bar: CitationStatusBar): Promise<void> {
-  const root = await activeProject();
+  const root = (await activeProject()).root ?? bar.root;
   if (!root) {
     void vscode.window.showInformationMessage('Citewatch: open a file of the project first.');
     return;
