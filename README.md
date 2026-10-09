@@ -11,6 +11,7 @@
 
 <p align="center">
   <a href="https://github.com/kabartay/citewatch/actions/workflows/ci.yml"><img src="https://github.com/kabartay/citewatch/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
+  <a href="https://doi.org/10.5281/zenodo.23270119"><img src="https://img.shields.io/badge/DOI-10.5281%2Fzenodo.23270119-blue.svg" alt="DOI 10.5281/zenodo.23270119"></a>
   <a href="https://github.com/kabartay/citewatch/releases/latest"><img src="https://img.shields.io/github/v/release/kabartay/citewatch?color=blue" alt="Release"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-green.svg" alt="License: MIT"></a>
   <a href="package.json"><img src="https://img.shields.io/badge/VS%20Code-%E2%89%A51.85-007ACC.svg?logo=visualstudiocode" alt="VS Code 1.85+"></a>

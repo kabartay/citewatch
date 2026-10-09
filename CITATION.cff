@@ -9,6 +9,10 @@ authors:
     email: mukharbek.organokov@gmail.com
     orcid: "https://orcid.org/0000-0002-3093-3456"
 repository-code: "https://github.com/kabartay/citewatch"
+identifiers:
+  - type: doi
+    value: 10.5281/zenodo.23270119
+    description: The concept DOI, which always resolves to the newest version.
 abstract: >-
   A Visual Studio Code extension for making research software citable through
   Zenodo's GitHub integration without surprises. It checks .zenodo.json and
