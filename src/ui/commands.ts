@@ -8,7 +8,7 @@ import { readVersions } from '../application/citationService';
 import { doiBadge } from '../domain/format';
 import { referenceVersion, VERSION_FILES, withVersion } from '../domain/versions';
 import type { CitationStatusBar } from './statusBar';
-import { activeFolder, EditorAwareFiles } from './files';
+import { activeProject, EditorAwareFiles } from './files';
 import { signInToGitHub } from './gitHubAuth';
 
 /** Registers every command and returns their disposables. */
@@ -62,14 +62,15 @@ async function actions(bar: CitationStatusBar): Promise<void> {
 
 /** Writes one version into every file that states one, keeping each file's formatting. */
 async function setVersion(bar: CitationStatusBar): Promise<void> {
-  const folder = activeFolder();
-  if (!folder) {
+  const root = await activeProject();
+  if (!root) {
+    void vscode.window.showInformationMessage('Citewatch: open a file of the project first.');
     return;
   }
-  const files = new EditorAwareFiles(folder);
+  const files = new EditorAwareFiles(root);
   const reference = referenceVersion(await readVersions(files));
   const version = await vscode.window.showInputBox({
-    title: 'Citewatch: set version everywhere',
+    title: `Citewatch: set version everywhere in ${root.path.split('/').at(-1) ?? ''}`,
     prompt: `Written to every file that states a version: ${VERSION_FILES.join(', ')}. Without a leading "v".`,
     value: reference?.version.replace(/^v/i, ''),
     validateInput: (v) => (/^\d+(\.\d+)*([-+.][0-9A-Za-z.-]+)?$/.test(v.trim()) ? undefined : 'A version such as 1.2.3'),
@@ -79,7 +80,7 @@ async function setVersion(bar: CitationStatusBar): Promise<void> {
   }
   const changed: string[] = [];
   for (const file of VERSION_FILES) {
-    const uri = vscode.Uri.joinPath(folder.uri, file);
+    const uri = vscode.Uri.joinPath(root, file);
     const text = await files.read(file);
     const next = text === undefined ? undefined : withVersion(file, text, version.trim());
     if (next === undefined || next === text) {

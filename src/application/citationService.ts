@@ -84,7 +84,7 @@ export class CitationService {
     const zenodoSwitch: ZenodoSwitch =
       options.checkSwitch && repo ? await this.safely(() => this.switches.zenodoSwitch(repo), 'unknown', 'switch') : 'unknown';
     this.log.info(
-      `${repo ?? 'folder'}: ${conceptDoi ?? 'no DOI'}, ${versions.length} archived, files say ${localVersion ?? 'no version'}, Zenodo ${zenodoSwitch}`,
+      `${repo ?? 'project without a GitHub remote'}: ${conceptDoi ?? 'no DOI'}, ${versions.length} archived, files say ${localVersion ?? 'no version'}, Zenodo ${zenodoSwitch}`,
     );
     return { repo, conceptDoi, versions, localVersion, zenodoSwitch, citable };
   }

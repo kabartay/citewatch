@@ -5,8 +5,8 @@ many versions are archived, what the files say, and the Zenodo switch.
 
 ## No status bar item
 
-The active folder has neither `CITATION.cff` nor `.zenodo.json`, or `citewatch.showStatusBar`
-is off.
+The file you are editing belongs to no project with `CITATION.cff` or `.zenodo.json` (the log
+line names the project it found), or `citewatch.showStatusBar` is off.
 
 ## "Zenodo integration: unknown"
 

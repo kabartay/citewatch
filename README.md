@@ -88,7 +88,9 @@ means a release now would get no DOI, and the status bar turns amber.
 2. Or download the `.vsix` from [Releases](https://github.com/kabartay/citewatch/releases) and
    use **Extensions → ··· → Install from VSIX…**.
 
-Open a folder with a `CITATION.cff` or `.zenodo.json`; the status bar item appears.
+Open a project with a `CITATION.cff` or `.zenodo.json`; the status bar item appears. In a
+workspace that holds many repositories, Citewatch follows the file you are editing to its own
+project.
 
 ## Commands
 

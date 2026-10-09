@@ -55,13 +55,16 @@ the licence, cached per id; when Zenodo cannot answer, nothing is reported.
 
 ## A summary
 
-1. `CitationStatusBar` asks `CitationService.summary` for the active folder; a summary is
+1. The project is the nearest directory at or above the active file, up to its workspace
+   folder, that holds `CITATION.cff` or `.zenodo.json`, else `.git`; so a workspace holding many
+   repositories follows the file being edited.
+2. `CitationStatusBar` asks `CitationService.summary` for that project; a summary is
    cached for ten minutes, since Zenodo allows about 30 requests a minute.
-2. The repository comes from `.git/config`'s `origin`; the concept DOI from `CITATION.cff`, else
+3. The repository comes from `.git/config`'s `origin`; the concept DOI from `CITATION.cff`, else
    a README badge, else a Zenodo title search that also requires a shared creator family name.
-3. Versions come from `/api/records?q=conceptrecid:…&all_versions=true`, 25 at most (Zenodo's
+4. Versions come from `/api/records?q=conceptrecid:…&all_versions=true`, 25 at most (Zenodo's
    anonymous page limit), newest first.
-4. The switch comes from `/repos/{repo}/hooks`: on if an active hook to `https://zenodo.org/`
+5. The switch comes from `/repos/{repo}/hooks`: on if an active hook to `https://zenodo.org/`
    listens for releases. Any failure, including no admin access, is unknown, never off.
 
 ## Setting the version

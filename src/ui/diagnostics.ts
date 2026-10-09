@@ -67,7 +67,7 @@ export class CitationDiagnostics implements vscode.Disposable {
       if (!watched) {
         continue;
       }
-      const problems = await this.problems(document, watched.file, watched.folder);
+      const problems = await this.problems(document, watched.file, watched.root);
       if (!document.isClosed) {
         this.collection.set(document.uri, problems.map((p) => toDiagnostic(p, document)));
       }
@@ -80,7 +80,7 @@ export class CitationDiagnostics implements vscode.Disposable {
     this.collection.dispose();
   }
 
-  private async problems(document: vscode.TextDocument, file: string, folder: vscode.WorkspaceFolder): Promise<Problem[]> {
+  private async problems(document: vscode.TextDocument, file: string, root: vscode.Uri): Promise<Problem[]> {
     const text = document.getText();
     const out: Problem[] = [];
     if (file === '.zenodo.json') {
@@ -101,7 +101,7 @@ export class CitationDiagnostics implements vscode.Disposable {
     if (file === 'CITATION.cff') {
       out.push(...checkCitationCff(text, today()));
     }
-    const mismatch = versionMismatches(await readVersions(new EditorAwareFiles(folder))).get(file as never);
+    const mismatch = versionMismatches(await readVersions(new EditorAwareFiles(root))).get(file as never);
     if (mismatch) {
       out.push(mismatch);
     }

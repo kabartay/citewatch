@@ -9,13 +9,15 @@ import type { Logger } from '../application/ports';
 import { needsAttention, statusText, tooltipMarkdown } from '../domain/format';
 import type { CitationSummary } from '../domain/types';
 import { readConfig } from './config';
-import { activeFolder, EditorAwareFiles, watchedFile } from './files';
+import { activeProject, EditorAwareFiles, watchedFile } from './files';
 
 /** Owns the status bar item and the summary it shows. */
 export class CitationStatusBar implements vscode.Disposable {
   private readonly item = vscode.window.createStatusBarItem('citewatch.status', vscode.StatusBarAlignment.Left, 40);
   private readonly subscriptions: vscode.Disposable[] = [];
   private timer: ReturnType<typeof setInterval> | undefined;
+  /** Counts refreshes, so one overtaken by a later refresh does not draw. */
+  private generation = 0;
   current: CitationSummary | undefined;
 
   constructor(
@@ -36,15 +38,23 @@ export class CitationStatusBar implements vscode.Disposable {
     void this.refresh();
   }
 
-  /** Re-reads the active folder's citation state; `force` bypasses the cache. */
+  /** Re-reads the active project's citation state; `force` bypasses the cache. */
   async refresh(force = false): Promise<void> {
-    const folder = activeFolder();
-    if (!folder || !readConfig().showStatusBar) {
+    const generation = ++this.generation;
+    const root = await activeProject();
+    if (generation !== this.generation) {
+      return;
+    }
+    if (!root || !readConfig().showStatusBar) {
       this.item.hide();
       return;
     }
     try {
-      this.current = await this.service.summary(folder.uri.fsPath, new EditorAwareFiles(folder), { checkSwitch: readConfig().checkZenodoSwitch }, force);
+      const summary = await this.service.summary(root.fsPath, new EditorAwareFiles(root), { checkSwitch: readConfig().checkZenodoSwitch }, force);
+      if (generation !== this.generation) {
+        return;
+      }
+      this.current = summary;
     } catch (err) {
       this.log.warn(`status: ${err instanceof Error ? err.message : String(err)}`);
       return;

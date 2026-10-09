@@ -2,7 +2,7 @@
   "name": "citewatch",
   "displayName": "Citewatch: Zenodo DOIs and CITATION.cff for your releases",
   "description": "Make your software citable without surprises: checks .zenodo.json and CITATION.cff as you type, keeps versions in step across files, shows your DOI, and warns when Zenodo is not switched on before you release.",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "publisher": "kabartay",
   "icon": "images/icon.png",
   "galleryBanner": {
@@ -35,8 +35,8 @@
     "Other"
   ],
   "activationEvents": [
-    "workspaceContains:CITATION.cff",
-    "workspaceContains:.zenodo.json",
+    "workspaceContains:**/CITATION.cff",
+    "workspaceContains:**/.zenodo.json",
     "onLanguage:json",
     "onLanguage:yaml"
   ],

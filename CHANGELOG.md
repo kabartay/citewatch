@@ -6,6 +6,16 @@ All notable changes to Citewatch. The format follows
 
 ## [Unreleased]
 
+## [0.1.1] — 2026-10-09
+
+### Fixed
+
+- A workspace that holds many repositories, such as a whole `~/projects` folder, now works.
+  Citewatch follows the file being edited to its project (the nearest directory with
+  `CITATION.cff` or `.zenodo.json`, else with `.git`). Before, it looked only at the workspace
+  folder's root and found nothing there. Files in subfolders are now checked too, except under
+  `node_modules`.
+
 ## [0.1.0] — 2026-10-09
 
 ### Added
@@ -24,5 +34,6 @@ All notable changes to Citewatch. The format follows
 - Commands to copy the concept DOI, the latest version DOI and a shields.io DOI badge, and to
   set one version in every file.
 
-[Unreleased]: https://github.com/kabartay/citewatch/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/kabartay/citewatch/compare/v0.1.1...HEAD
+[0.1.1]: https://github.com/kabartay/citewatch/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/kabartay/citewatch/releases/tag/v0.1.0
