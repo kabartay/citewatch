@@ -1,0 +1,33 @@
+cff-version: 1.2.0
+title: "Citewatch: a VS Code extension that checks Zenodo and Citation File Format metadata before a software release"
+message: >-
+  If you use or build on this software, please cite it.
+type: software
+authors:
+  - family-names: Organokov
+    given-names: Mukharbek
+    email: mukharbek.organokov@gmail.com
+    orcid: "https://orcid.org/0000-0002-3093-3456"
+repository-code: "https://github.com/kabartay/citewatch"
+abstract: >-
+  A Visual Studio Code extension for making research software citable through
+  Zenodo's GitHub integration without surprises. It checks .zenodo.json and
+  CITATION.cff as they are typed: required fields, Zenodo's licence vocabulary
+  (queried live), ORCID check digits, DOI and date formats, and that every file
+  states the same version. Mistakes that would make Zenodo silently drop a
+  release's deposit are reported as errors. The status bar shows the concept DOI
+  and the newest archived version, and turns amber when Zenodo's webhook is not
+  installed on the repository, so a release is not published without its DOI. It
+  copies the DOI and a badge that is safe in a VS Code extension's README, and
+  sets one version across package.json, pyproject.toml, CITATION.cff and
+  .zenodo.json. Read-only towards Zenodo and GitHub, with no runtime dependencies
+  and no telemetry. Unofficial; not affiliated with Zenodo, CERN or GitHub.
+keywords:
+  - Zenodo
+  - Citation File Format
+  - DOI
+  - research software
+  - Visual Studio Code extension
+license: MIT
+version: 0.1.0
+date-released: "2026-10-09"

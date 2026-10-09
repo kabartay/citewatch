@@ -1,0 +1,12 @@
+Citewatch
+Copyright (c) 2026 Mukharbek Organokov. MIT licence; see LICENSE.
+
+This product includes schemas/citation-cff-1.2.0.schema.json, the JSON Schema of the
+Citation File Format 1.2.0, by Stephan Druskat, Jurriaan H. Spaaks, Neil Chue Hong,
+Robert Haines, James Baker, Spencer Bliven, Egon Willighagen, David Pérez-Suárez and
+Alexander Konovalov, from https://github.com/citation-file-format/citation-file-format,
+licensed under the Creative Commons Attribution 4.0 International licence (CC-BY-4.0):
+https://creativecommons.org/licenses/by/4.0/. It is included unmodified.
+
+schemas/zenodo.schema.json is Citewatch's own, written from Zenodo's documentation of
+.zenodo.json and the legacy deposit metadata, and is under the MIT licence above.

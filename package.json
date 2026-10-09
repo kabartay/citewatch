@@ -1,0 +1,145 @@
+{
+  "name": "citewatch",
+  "displayName": "Citewatch: Zenodo DOIs and CITATION.cff for your releases",
+  "description": "Make your software citable without surprises: checks .zenodo.json and CITATION.cff as you type, keeps versions in step across files, shows your DOI, and warns when Zenodo is not switched on before you release.",
+  "version": "0.1.0",
+  "publisher": "kabartay",
+  "icon": "images/icon.png",
+  "galleryBanner": {
+    "color": "#1C1F26",
+    "theme": "dark"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kabartay/citewatch.git"
+  },
+  "bugs": {
+    "url": "https://github.com/kabartay/citewatch/issues"
+  },
+  "homepage": "https://github.com/kabartay/citewatch#readme",
+  "qna": "https://github.com/kabartay/citewatch/issues",
+  "keywords": [
+    "zenodo",
+    "doi",
+    "citation",
+    "citation.cff",
+    "research software",
+    "orcid"
+  ],
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Linters",
+    "Other"
+  ],
+  "activationEvents": [
+    "workspaceContains:CITATION.cff",
+    "workspaceContains:.zenodo.json",
+    "onLanguage:json",
+    "onLanguage:yaml"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "jsonValidation": [
+      {
+        "fileMatch": ".zenodo.json",
+        "url": "./schemas/zenodo.schema.json"
+      }
+    ],
+    "yamlValidation": [
+      {
+        "fileMatch": "CITATION.cff",
+        "url": "./schemas/citation-cff-1.2.0.schema.json"
+      }
+    ],
+    "languages": [
+      {
+        "id": "yaml",
+        "filenames": [
+          "CITATION.cff"
+        ]
+      }
+    ],
+    "commands": [
+      {
+        "command": "citewatch.copyConceptDoi",
+        "title": "Copy Concept DOI",
+        "category": "Citewatch",
+        "icon": "$(copy)"
+      },
+      {
+        "command": "citewatch.copyVersionDoi",
+        "title": "Copy Latest Version DOI",
+        "category": "Citewatch",
+        "icon": "$(copy)"
+      },
+      {
+        "command": "citewatch.copyBadge",
+        "title": "Copy DOI Badge (Markdown)",
+        "category": "Citewatch",
+        "icon": "$(markdown)"
+      },
+      {
+        "command": "citewatch.setVersion",
+        "title": "Set Version Everywhere…",
+        "category": "Citewatch",
+        "icon": "$(versions)"
+      },
+      {
+        "command": "citewatch.refresh",
+        "title": "Refresh",
+        "category": "Citewatch",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "citewatch.showLog",
+        "title": "Show Log",
+        "category": "Citewatch",
+        "icon": "$(output)"
+      }
+    ],
+    "configuration": {
+      "title": "Citewatch",
+      "properties": {
+        "citewatch.checkLicenceOnline": {
+          "type": "boolean",
+          "default": true,
+          "markdownDescription": "Check `.zenodo.json`'s licence against Zenodo's live licence vocabulary. Off, only the offline checks run."
+        },
+        "citewatch.checkZenodoSwitch": {
+          "type": "boolean",
+          "default": true,
+          "markdownDescription": "Check, through your GitHub sign-in in VS Code, whether Zenodo's GitHub integration is switched on for this repository. Needs admin access to the repository."
+        },
+        "citewatch.showStatusBar": {
+          "type": "boolean",
+          "default": true,
+          "markdownDescription": "Show the DOI and archived version in the status bar."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "typecheck": "tsc --noEmit -p ./",
+    "lint": "eslint .",
+    "test": "npm run compile && node --test \"out/test/**/*.test.js\"",
+    "test:coverage": "npm run compile && node --test --experimental-test-coverage --test-coverage-exclude=\"out/test/**\" \"out/test/**/*.test.js\"",
+    "check": "npm run typecheck && npm run lint && npm test",
+    "package": "vsce package",
+    "vscode:prepublish": "rm -rf out && npm run compile"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/node": "^26.6.4",
+    "@types/vscode": "~1.85.0",
+    "@vscode/vsce": "^4.0.0",
+    "eslint": "^10.12.0",
+    "jiti": "^2.7.0",
+    "typescript": "^5.4.0",
+    "typescript-eslint": "^8.71.1"
+  }
+}
